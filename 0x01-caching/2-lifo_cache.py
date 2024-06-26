@@ -5,8 +5,10 @@ from base_caching import BaseCaching
 
 class LIFOCache(BaseCaching):
     """
-    LIFOCache inherits from BaseCaching and is a caching system with LIFO eviction policy.
+    LIFOCache inherits from BaseCaching and is a caching
+    system with LIFO eviction policy.
     """
+
     def __init__(self):
         """ LIFO Caching system """
         super().__init__()
