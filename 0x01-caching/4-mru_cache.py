@@ -5,9 +5,11 @@
     """
 from base_caching import BaseCaching
 
+
 class MRUCache(BaseCaching):
     """
-    MRUCache inherits from BaseCaching and is a caching system with MRU eviction policy.
+    MRUCache inherits from BaseCaching and is
+    a caching system with MRU eviction policy.
     """
 
     def __init__(self):
@@ -17,7 +19,8 @@ class MRUCache(BaseCaching):
 
     def put(self, key, item):
         """
-        Assign the item value to the dictionary self.cache_data for the key key.
+        Assign the item value to the dictionary
+        self.cache_data for the key key.
         Maintain MRU order by updating the usage order list.
         """
         if key is None or item is None:
@@ -42,4 +45,3 @@ class MRUCache(BaseCaching):
             self.keys.append(key)
             return self.cache_data[key]
         return None
-
