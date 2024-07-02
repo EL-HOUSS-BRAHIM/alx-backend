@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
+
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext as _
+import pytz
+from pytz.exceptions import UnknownTimeZoneError
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -32,23 +35,40 @@ def before_request():
 
 @babel.localeselector
 def get_locale():
-    # 1. Locale from URL parameters
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
         return locale
-    # 2. Locale from user settings
     if g.user and g.user.get('locale') in app.config['LANGUAGES']:
         return g.user.get('locale')
-    # 3. Locale from request header
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+@babel.timezoneselector
+def get_timezone():
+    # 1. Timezone from URL parameters
+    timezone = request.args.get('timezone')
+    if timezone:
+        try:
+            pytz.timezone(timezone)
+            return timezone
+        except UnknownTimeZoneError:
+            pass
+    # 2. Timezone from user settings
+    if g.user and g.user.get('timezone'):
+        try:
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except UnknownTimeZoneError:
+            pass
+    # 3. Default to UTC
+    return app.config['BABEL_DEFAULT_TIMEZONE']
 
 @app.context_processor
 def inject_locale():
-    return dict(get_locale=get_locale)
+    return dict(get_locale=get_locale, get_timezone=get_timezone)
 
 @app.route('/')
 def index():
-    return render_template('6-index.html')
+    return render_template('7-index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
