@@ -11,15 +11,18 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 class Config:
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
 babel = Babel(app)
+
 
 def get_user():
     login_as = request.args.get('login_as')
@@ -28,9 +31,11 @@ def get_user():
         return user
     return None
 
+
 @app.before_request
 def before_request():
     g.user = get_user()
+
 
 @babel.localeselector
 def get_locale():
@@ -40,6 +45,7 @@ def get_locale():
     if g.user and g.user.get('locale') in app.config['LANGUAGES']:
         return g.user.get('locale')
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 @babel.timezoneselector
 def get_timezone():
@@ -61,15 +67,18 @@ def get_timezone():
     # 3. Default to UTC
     return app.config['BABEL_DEFAULT_TIMEZONE']
 
+
 @app.context_processor
 def inject_locale():
     return dict(get_locale=get_locale, get_timezone=get_timezone)
 
+
 @app.route('/')
 def index():
-    current_time = datetime.now(pytz.timezone(get_timezone())).strftime('%b %d, %Y, %I:%M:%S %p')
+    current_time = datetime.now(pytz.timezone(
+        get_timezone())).strftime('%b %d, %Y, %I:%M:%S %p')
     return render_template('index.html', current_time=current_time)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
