@@ -6,8 +6,10 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
+
 msgid "home_title"
 msgstr "Bienvenue chez Holberton"
+
 msgid "home_header"
-sgstr "Bonjour monde!"
+msgstr "Bonjour monde!"
 
