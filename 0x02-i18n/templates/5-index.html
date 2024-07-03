@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="{{ get_locale() }}">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ _('home_title') }}</title>
 </head>
 <body>
     <h1>{{ _('home_header') }}</h1>
-    <p>
-        {% if g.user %}
-            {{ _('logged_in_as', username=g.user['name']) }}
-        {% else %}
-            {{ _('not_logged_in') }}
-        {% endif %}
-    </p>
+    {% if g.user %}
+    <p>{{ _('logged_in_as', username=g.user.get('name', '')) }}</p>
+    {% else %}
+    <p>{{ _('not_logged_in') }}</p>
+    {% endif %}
 </body>
 </html>
-
