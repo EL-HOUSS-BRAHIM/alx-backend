@@ -5,7 +5,18 @@
 #
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2024-07-03 00:36+0200\n"
+"PO-Revision-Date: 2024-07-03 00:36+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
 
 msgid "home_title"
 msgstr "Bienvenue chez Holberton"
@@ -18,9 +29,3 @@ msgstr "Vous êtes connecté en tant que %(username)s."
 
 msgid "not_logged_in"
 msgstr "Vous n'êtes pas connecté."
-
-msgid "current_timezone"
-msgstr "Le fuseau horaire actuel est %(timezone)s."
-
-msgid "current_time_is"
-msgstr "Nous sommes le %(current_time)s."
