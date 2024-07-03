@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+""" Basic Babel setup task3"""
 from flask import Flask, render_template, request
 from flask_babel import Babel, gettext as _
 
 
 class Config:
+    """ Config class for Babel"""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
@@ -17,16 +19,19 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
+    """ Get locale from request"""
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.context_processor
 def inject_locale():
+    """ Inject locale into templates"""
     return dict(get_locale=get_locale)
 
 
 @app.route('/')
 def index():
+    """ Index page"""
     return render_template('3-index.html')
 
 

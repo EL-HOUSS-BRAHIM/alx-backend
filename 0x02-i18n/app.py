@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+""" Basic Babel setup task8 advanced"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, gettext as _
 from datetime import datetime
@@ -13,6 +15,7 @@ users = {
 
 
 class Config:
+    """ Config class for Babel"""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
@@ -25,6 +28,7 @@ babel = Babel(app)
 
 
 def get_user():
+    """ Get user from request"""
     login_as = request.args.get('login_as')
     if login_as:
         user = users.get(int(login_as))
@@ -34,11 +38,13 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """ Before request"""
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale():
+    """ Get locale from request"""
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
         return locale
@@ -49,6 +55,7 @@ def get_locale():
 
 @babel.timezoneselector
 def get_timezone():
+    """ Get timezone from request"""
     # 1. Timezone from URL parameters
     timezone = request.args.get('timezone')
     if timezone:
@@ -70,11 +77,13 @@ def get_timezone():
 
 @app.context_processor
 def inject_locale():
+    """ Inject locale into templates"""
     return dict(get_locale=get_locale, get_timezone=get_timezone)
 
 
 @app.route('/')
 def index():
+    """ Index route"""
     current_time = datetime.now(pytz.timezone(
         get_timezone())).strftime('%b %d, %Y, %I:%M:%S %p')
     return render_template('index.html', current_time=current_time)
