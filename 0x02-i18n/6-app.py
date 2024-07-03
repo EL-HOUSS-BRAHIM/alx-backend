@@ -5,11 +5,13 @@ from flask_babel import Babel, gettext as _
 import pytz
 from typing import Optional
 
+
 class Config:
     """Config class for Flask app."""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -22,6 +24,7 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
+
 def get_user() -> Optional[dict]:
     """Retrieve user based on login_as parameter."""
     try:
@@ -30,10 +33,12 @@ def get_user() -> Optional[dict]:
     except (TypeError, ValueError):
         return None
 
+
 @app.before_request
 def before_request() -> None:
     """Executed before each request to set the global user."""
     g.user = get_user()
+
 
 @babel.localeselector
 def get_locale() -> str:
@@ -45,10 +50,12 @@ def get_locale() -> str:
         return g.user['locale']
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
+
 @app.route('/')
 def index() -> str:
     """Render the home page."""
     return render_template('6-index.html')
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
